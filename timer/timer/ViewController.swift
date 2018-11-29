@@ -12,7 +12,7 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var timeSaying: UILabel!
-    
+    let synthesizer = AVSpeechSynthesizer()
     //let images=["1","2","3","4"]
     let labels=["Time is money.","Time tries truth.","Time will tell.","Time brings the truth to light.","Time tries friends as fire tries gold.","Time and tide wait for no man.","Time cannot be won again.","Time is a file that wears and makes no noise.","Time stays not the fool's leisure.","Time and I against any two.","Time will tell.","Take time by the forelock."]
     
@@ -45,6 +45,17 @@ class ViewController: UIViewController {
                     i=0
                 }
             }
+        }
+        Timer.scheduledTimer(withTimeInterval: 3600, repeats: true){ (_) in
+            // speak per hour
+            
+            let now = Date()
+            let formatter = DateFormatter()
+            formatter.dateFormat = "HH:mm:ss"
+            let time = formatter.string(from: now)
+            let utterance = AVSpeechUtterance(string: "現在時間是\(time)")
+            utterance.voice = AVSpeechSynthesisVoice(language: "zh-TW")
+            self.synthesizer.speak(utterance)
         }
         
     }
